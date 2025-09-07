@@ -1,0 +1,331 @@
+.customization-toggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 10000;
+  transition: all 0.3s ease;
+}
+
+.customization-toggle:hover {
+  background: #45a049;
+  transform: scale(1.05);
+}
+
+.customization-panel {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 350px;
+  max-height: 90vh;
+  background: rgba(40, 44, 52, 0.95);
+  border: 1px solid #4CAF50;
+  border-radius: 8px;
+  color: white;
+  z-index: 10001;
+  overflow-y: auto;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #4CAF50;
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.panel-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.close-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.panel-content {
+  padding: 20px;
+}
+
+.settings-section {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.settings-section h4 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  color: #4CAF50;
+  font-weight: 600;
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(130px,1fr));
+  gap: 8px 12px;
+  margin-bottom: 4px;
+}
+
+/* Unified checkbox row style */
+.checkbox-grid label,
+label:has(> input[type="checkbox"]) {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+  line-height: 1.1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  transition: background .18s ease, border-color .18s ease;
+}
+
+.checkbox-grid label:hover,
+label:has(> input[type="checkbox"]):hover {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.18);
+}
+
+/* Custom checkbox appearance */
+.checkbox-grid input[type="checkbox"],
+label input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #4caf50;
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  background: rgba(0,0,0,0.4);
+  margin: 0;
+  position: relative;
+  outline: none;
+  transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.checkbox-grid input[type="checkbox"]:hover,
+label input[type="checkbox"]:hover {
+  border-color: #66d066;
+}
+
+.checkbox-grid input[type="checkbox"]:focus-visible,
+label input[type="checkbox"]:focus-visible {
+  box-shadow: 0 0 0 3px rgba(76,175,80,0.35);
+}
+
+.checkbox-grid input[type="checkbox"]:checked,
+label input[type="checkbox"]:checked {
+  background: linear-gradient(135deg,#4caf50,#2e7d32);
+  border-color: #4caf50;
+}
+
+.checkbox-grid input[type="checkbox"]:checked::after,
+label input[type="checkbox"]:checked::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 8 5.5 11 12 3"/></svg>') center/contain no-repeat;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.6));
+}
+
+/* Ensure text wraps nicely next to custom checkbox */
+.checkbox-grid label span,
+label:has(> input[type="checkbox"]) span {
+  flex: 1;
+  display: inline-block;
+}
+
+/* Slightly tighten generic label vertical spacing now that checkboxes have their own style */
+label { gap: 4px; }
+
+.color-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.checkbox-grid label {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+input[type="text"] {
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #4CAF50;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 5px 0;
+  accent-color: #4CAF50;
+}
+
+input[type="number"],
+input[type="color"],
+select {
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+}
+
+input[type="number"]:focus,
+input[type="color"]:focus,
+select:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
+}
+
+input[type="color"] {
+  width: 50px;
+  height: 40px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+select {
+  cursor: pointer;
+}
+
+select option {
+  background: #2c3e50;
+  color: white;
+}
+
+.reset-button {
+  width: 100%;
+  padding: 12px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reset-button:hover {
+  background: #c0392b;
+}
+
+/* Range input styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #4CAF50;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: #45a049;
+  transform: scale(1.1);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #4CAF50;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+/* Scrollbar styling */
+.customization-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.customization-panel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.customization-panel::-webkit-scrollbar-thumb {
+  background: #4CAF50;
+  border-radius: 4px;
+}
+
+.customization-panel::-webkit-scrollbar-thumb:hover {
+  background: #45a049;
+}
+
+/* Value display for sliders */
+label span {
+  font-size: 12px;
+  color: #4CAF50;
+  font-weight: 600;
+  margin-left: auto;
+}

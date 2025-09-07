@@ -1,0 +1,157 @@
+.combat-overlay {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+  user-select: none;
+  pointer-events: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.combat-overlay-horizontal {
+  flex-direction: row;
+  align-items: center;
+}
+
+.combat-overlay-vertical {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.combat-overlay-compact {
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 200px;
+}
+
+.combat-overlay-minimal {
+  flex-direction: row;
+  gap: 4px;
+  padding: 4px;
+}
+
+.combat-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  min-width: 0;
+}
+
+.combat-bar-hp {
+  order: 1;
+}
+
+.combat-bar-adrenaline {
+  order: 2;
+}
+
+.combat-bar-prayer {
+  order: 3;
+}
+
+.combat-bar-summoning {
+  order: 4;
+}
+
+.combat-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.combat-bar-background {
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  min-width: 60px;
+  transition: all 0.2s ease;
+}
+
+.combat-bar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.3s ease;
+  background: linear-gradient(45deg, transparent 25%, rgba(255, 255, 255, 0.1) 25%, rgba(255, 255, 255, 0.1) 50%, transparent 50%, transparent 75%, rgba(255, 255, 255, 0.1) 75%);
+  background-size: 8px 8px;
+  animation: barberpole 1s linear infinite;
+}
+
+@keyframes barberpole {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 8px 8px;
+  }
+}
+
+.combat-bar-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .combat-overlay {
+    gap: 4px;
+    padding: 4px;
+  }
+  
+  .combat-icon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .combat-bar-background {
+    min-width: 50px;
+  }
+}
+
+/* Animation for low HP warning */
+.combat-bar-hp .combat-bar-fill[style*="ff3838"] {
+  animation: lowHpPulse 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes lowHpPulse {
+  0% {
+    filter: brightness(1);
+  }
+  100% {
+    filter: brightness(1.3);
+  }
+}
+
+/* Hover effects for better visibility */
+.combat-overlay:hover {
+  backdrop-filter: blur(6px);
+}
+
+.combat-overlay:hover .combat-bar-background {
+  transform: scale(1.02);
+}
+
+/* Vertical layout adjustments */
+.combat-overlay-vertical .combat-bar {
+  width: 100%;
+}
+
+.combat-overlay-vertical .combat-bar-background {
+  height: 100%;
+  min-height: 60px;
+}
+
+.combat-overlay-vertical .combat-bar-fill {
+  bottom: 0;
+  top: auto;
+}
