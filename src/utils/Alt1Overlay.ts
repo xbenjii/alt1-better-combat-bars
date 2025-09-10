@@ -1,5 +1,11 @@
 import { LifeState, OverlayCustomization } from '../types';
 
+import AdrenalineOff from '../assets/adrenaline_off_transparent.png';
+import AdrenalineOn from '../assets/adrenaline_transparent.png';
+import Hp from '../assets/hp_transparent.png';
+import PrayerOff from '../assets/prayer_off_transparent.png';
+import PrayerOn from '../assets/prayer_transparent.png';
+import Summoning from '../assets/summoning_transparent.png';
 import { mixColor } from 'alt1';
 
 export class Alt1Overlay {
@@ -564,23 +570,23 @@ export class Alt1Overlay {
   private getStatImagePath(type: 'hp' | 'adrenaline' | 'prayer' | 'summoning', current: number): string {
     switch (type) {
       case 'hp':
-        return '/src/assets/hp_transparent.png';
+        return Hp;
       case 'adrenaline': {
         const flag = (this.states as { adrenalineActive?: boolean }).adrenalineActive;
         // If flag is defined, trust it explicitly (allows showing off icon even when current > 0).
         // If undefined (older state object), fall back to numeric value heuristic.
         const active = flag === undefined ? current > 0 : flag;
-        return active ? '/src/assets/adrenaline_transparent.png' : '/src/assets/adrenaline_off_transparent.png';
+        return active ? AdrenalineOn : AdrenalineOff;
       }
       case 'prayer': {
         const flag = (this.states as { prayerActive?: boolean }).prayerActive;
         const active = flag === undefined ? current > 0 : flag;
-        return active ? '/src/assets/prayer_transparent.png' : '/src/assets/prayer_off_transparent.png';
+        return active ? PrayerOn : PrayerOff;
       }
       case 'summoning':
-        return '/src/assets/summoning_transparent.png';
+        return Summoning;
       default:
-        return '/src/assets/hp_transparent.png';
+        return Hp;
     }
   }
 
