@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react'
 import AdrenalineOff from './assets/adrenaline_off_transparent.png';
 import AdrenalineOn from './assets/adrenaline_transparent.png';
 import { Alt1Overlay } from './utils/Alt1Overlay';
-import Alt1Wrapper from './Alt1Wrapper';
 import { CustomizationPanel } from './components/CustomizationPanel';
 import Hp from './assets/hp_transparent.png';
 import PrayerOff from './assets/prayer_off_transparent.png';
@@ -295,7 +294,6 @@ function App() {
   }
 
   return (
-    <Alt1Wrapper>
       <div className="app-container">
         {/* Status Display */}
         <div className="status-panel">
@@ -368,7 +366,6 @@ function App() {
           }}
         />
       </div>
-    </Alt1Wrapper>
   )
 }
 
