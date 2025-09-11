@@ -1,3 +1,8 @@
+export type ScreenResolution = {
+  width: number;
+  height: number;
+};
+
 export type LifeState = {
   hp: number;
   hpMax: number;

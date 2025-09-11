@@ -2,7 +2,7 @@ import './App.css'
 
 import { ColortTriplet, findReadLine } from 'alt1/ocr';
 import { ImageDetect, captureHold, captureHoldFullRs, imageDataFromUrl } from 'alt1';
-import { LifeState, OverlayCustomization } from './types';
+import { LifeState, OverlayCustomization, ScreenResolution } from './types';
 import { useEffect, useState } from 'react'
 
 import AdrenalineOff from './assets/adrenaline_off_transparent.png';
@@ -18,6 +18,9 @@ import font from 'alt1/fonts/aa_8px_mono.js';
 
 const UPDATE_INTERVAL = 1000; // 1 second
 const GAME_TICK_UPDATE_INTERVAL = 600; // game tick is 0.6s
+
+const GAME_RESOLUTION: ScreenResolution = { width: alt1.rsWidth, height: alt1.rsHeight };
+console.log('Detected game resolution:', GAME_RESOLUTION);
 
 // Save and load customization settings
 const saveCustomization = (customization: OverlayCustomization) => {
@@ -184,7 +187,7 @@ function App() {
             const ys = coords.map(c => c.y);
             const minX = Math.max(0, Math.min(...xs) - 15);
             const minY = Math.max(0, Math.min(...ys) - 20);
-            const maxX = Math.max(...xs) + 170; // allow room for text to the right
+            const maxX = Math.max(...xs) + 140; // allow room for text to the right
             const maxY = Math.max(...ys) + 50;   // allow room for text height
             setCaptureRegion({ x: minX, y: minY, w: maxX - minX, h: maxY - minY });
           }
