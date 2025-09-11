@@ -17,24 +17,10 @@ An enhanced combat bars overlay for RuneScape that provides better visibility an
 ### Prerequisites
 - [Alt1 Toolkit](https://runeapps.org/alt1) must be installed on your computer
 
-### Method 1: Direct Installation (Recommended)
-1. Open Alt1 Toolkit
-2. Click the "+" button to add a new app
-3. Enter the app URL: `https://xbenjii.github.io/alt1-better-combat-bars/`
-4. The plugin will be automatically added to your Alt1 apps list
-
-### Method 2: Manual Installation
-1. Download the latest release from the [releases page](https://github.com/xbenjii/alt1-better-combat-bars/releases)
-2. Extract the files to a folder
-3. In Alt1 Toolkit, click "+" → "Load App from Folder"
-4. Navigate to and select the extracted folder
+### Installation
+1. Visit `https://xbenjii.github.io/alt1-better-combat-bars/` and click link to add to Alt1
 
 ## How to Use
-
-### Initial Setup
-1. **Launch the App**: Click on "Better Combat Bars" in your Alt1 apps list
-2. **Position the Overlay**: Drag the overlay window to your preferred location on screen
-3. **Resize if Needed**: Use the window borders to resize the overlay to your liking
 
 ### Basic Usage
 The overlay automatically detects and displays your current:
@@ -46,8 +32,7 @@ The overlay automatically detects and displays your current:
 ### Customization
 
 #### Opening Settings
-- Click the "Settings" button in the overlay window, or
-- Use the configurable keybind (default: Ctrl + Alt + C)
+- Click the "Settings" button in the overlay window
 
 #### Available Customizations
 
@@ -72,29 +57,16 @@ The overlay automatically detects and displays your current:
 - **Always on Top**: Keep overlay above other windows
 - **Snap to Grid**: Enable grid-based positioning for precise alignment
 
-### Keybinds
-Configure keyboard shortcuts for quick access:
-- **Toggle Settings**: Default Ctrl + Alt + C
-- **Toggle Overlay**: Default Ctrl + Alt + V
-- **Reset Position**: Default Ctrl + Alt + R
-
 ## Troubleshooting
 
 ### Overlay Not Detecting Stats
 1. **Check Game Interface**: Ensure your combat stats are visible on screen
-2. **Interface Scale**: Make sure RuneScape's interface scaling is supported
+2. **Interface Scale**: Make sure RuneScape's interface scaling is supported (100% only for now)
 3. **Overlay Position**: The overlay needs to be able to "see" your stats bars
 4. **Alt1 Permissions**: Verify Alt1 has screen capture permissions
 
 ### Performance Issues
-1. **Update Frequency**: Reduce the update frequency in settings
-2. **Hide Unused Bars**: Disable bars you don't need
-3. **Lower Transparency**: Reduce overlay complexity by using solid colors
-
-### Settings Not Saving
-1. **Browser Permissions**: Ensure local storage is enabled
-2. **Alt1 Version**: Update to the latest Alt1 Toolkit version
-3. **Clear Cache**: Try clearing the app's cache and reconfiguring
+1. **Hide Unused Bars**: Disable bars you don't need
 
 ### Common Solutions
 - **Restart Alt1**: Close and reopen Alt1 Toolkit
@@ -113,10 +85,10 @@ cd alt1-better-combat-bars
 yarn install
 
 # Start development server
-yarn dev
+yarn run dev
 
 # Build for production
-yarn build
+yarn run build
 ```
 
 ### Contributing
