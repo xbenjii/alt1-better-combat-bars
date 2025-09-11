@@ -383,8 +383,6 @@ export class Alt1Overlay {
     window.alt1.overLayRect(borderColor, progressBarX, intY, 1, barHeight, displayTime, 1); // Left
     window.alt1.overLayRect(borderColor, progressBarX + progressBarWidth - 1, intY, 1, barHeight, displayTime, 1); // Right
 
-    // Removed icon area highlight background for transparent look behind icons
-
     // Load and draw the stat image in the icon area (only if showIcons is enabled)
     if (this.customization.showIcons) {
       const imagePath = this.getStatImagePath(type, current);

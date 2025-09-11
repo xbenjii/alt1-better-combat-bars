@@ -21,6 +21,29 @@ export const CustomizationPanel: React.FC<CustomizationPanelProps> = ({
   // Local working copy to allow immediate UI feedback while debouncing expensive overlay updates
   const [localCustomization, setLocalCustomization] = useState<OverlayCustomization>(customization);
 
+  // Helper function to convert rgba/rgb colors to hex format for color inputs
+  const rgbaToHex = (rgba: string): string => {
+    // Handle hex colors (pass through)
+    if (rgba.startsWith('#')) {
+      return rgba;
+    }
+    
+    // Handle rgba/rgb colors
+    const match = rgba.match(/rgba?\(([^)]+)\)/);
+    if (match) {
+      const parts = match[1].split(',').map(p => p.trim());
+      const r = parseInt(parts[0]);
+      const g = parseInt(parts[1]);
+      const b = parseInt(parts[2]);
+      
+      const toHex = (n: number) => Math.max(0, Math.min(255, n)).toString(16).padStart(2, '0');
+      return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+    }
+    
+    // Fallback to white if we can't parse
+    return '#ffffff';
+  };
+
   // Keep local state in sync when parent customization changes externally (e.g., loading defaults)
   useEffect(() => {
     setLocalCustomization(customization);
@@ -336,7 +359,7 @@ export const CustomizationPanel: React.FC<CustomizationPanelProps> = ({
               </label>
               <label style={{ display: 'flex', flexDirection: 'column', fontSize: 12 }}>
                 Border
-                <input type="color" value={localCustomization.colors.border}
+                <input type="color" value={rgbaToHex(localCustomization.colors.border)}
                   onChange={(e) => updateColors('border', e.target.value)} />
               </label>
             </div>
