@@ -202,7 +202,7 @@ export const CustomizationPanel: React.FC<CustomizationPanelProps> = ({
             <input
               type="range"
               min="50"
-              max="300"
+              max="500"
               value={localCustomization.barWidth}
               onChange={(e) => updateCustomization({ barWidth: parseInt(e.target.value) })}
             />
@@ -365,7 +365,7 @@ export const CustomizationPanel: React.FC<CustomizationPanelProps> = ({
             </div>
             <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
               <label style={{ display: 'flex', flexDirection: 'column', fontSize: 12 }}>
-                Orientation
+                Gradient Orientation
                 <select
                   value={localCustomization.gradient?.orientation || 'horizontal'}
                   onChange={(e) => updateCustomization({ gradient: { ...(localCustomization.gradient || {}), orientation: e.target.value as 'horizontal' | 'vertical' } })}
@@ -391,14 +391,6 @@ export const CustomizationPanel: React.FC<CustomizationPanelProps> = ({
               onChange={(e) => updateCustomization({ lowHpThreshold: parseInt(e.target.value) })}
             />
             <span>{customization.lowHpThreshold}%</span>
-          </label>
-          <label>
-            Update Interval (ms):
-            <input
-              type="number"
-              value={localCustomization.updateIntervalMs}
-              onChange={(e) => updateCustomization({ updateIntervalMs: parseInt(e.target.value) })}
-            />
           </label>
           <label>
             <input

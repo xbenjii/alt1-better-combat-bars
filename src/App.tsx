@@ -17,6 +17,7 @@ import { defaultCustomization } from './config/defaults';
 import font from 'alt1/fonts/aa_8px_mono.js';
 
 const UPDATE_INTERVAL = 1000; // 1 second
+const GAME_TICK_UPDATE_INTERVAL = 600; // game tick is 0.6s
 
 // Save and load customization settings
 const saveCustomization = (customization: OverlayCustomization) => {
@@ -285,7 +286,7 @@ function App() {
           setDetected(true);
         }
       }
-    }, UPDATE_INTERVAL);
+    }, captureRegion ? GAME_TICK_UPDATE_INTERVAL : UPDATE_INTERVAL);
     return () => clearInterval(interval);
   }, [combatIcons, detected, captureRegion, iconPositions, failedReads]);
 

@@ -36,7 +36,6 @@ export type PointLike = {
 };
 
 export interface OverlayCustomization {
-  updateIntervalMs: number;
   showHP: boolean;
   showAdrenaline: boolean;
   showPrayer: boolean;

@@ -1,7 +1,6 @@
 import { OverlayCustomization } from '../types';
 
 export const defaultCustomization: OverlayCustomization = {
-  updateIntervalMs: 1000,
   showHP: true,
   showAdrenaline: true,
   showPrayer: true,
@@ -12,7 +11,7 @@ export const defaultCustomization: OverlayCustomization = {
   barWidth: 150,
   colors: {
     hp: '#ff4757',
-    hpLow: '#ff3838',
+    hpLow: '#ffffff',
     adrenaline: '#ffa502',
     prayer: '#5352ed',
     summoning: '#2ed573',

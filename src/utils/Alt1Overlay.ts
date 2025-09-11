@@ -17,6 +17,8 @@ export class Alt1Overlay {
   private lastRenderedStates: string = '';
   private lastRenderedCustomization: string = '';
   private isRendering: boolean = false;
+  private flashState: boolean = false;
+  private flashInterval: number | null = null;
 
   constructor(customization: OverlayCustomization, states: LifeState) {
     this.customization = customization;
@@ -98,8 +100,38 @@ export class Alt1Overlay {
       this.updateInterval = null;
     }
 
+    if (this.flashInterval) {
+      clearInterval(this.flashInterval);
+      this.flashInterval = null;
+    }
+
     if (window.alt1) {
       window.alt1.overLayClearGroup(this.overlayGroup);
+    }
+  }
+
+  private isLowHp(): boolean {
+    if (!this.states.hpMax || this.states.hpMax <= 0) return false;
+    const hpPercentage = (this.states.hp / this.states.hpMax) * 100;
+    return hpPercentage <= this.customization.lowHpThreshold;
+  }
+
+  private manageFlashTimer(): void {
+    const shouldFlash = this.isLowHp() && this.customization.showHP;
+    
+    if (shouldFlash && !this.flashInterval) {
+      // Start flashing - update every game tick (600ms)
+      this.flashInterval = window.setInterval(() => {
+        this.flashState = !this.flashState;
+        if (this.isVisible) {
+          this.render();
+        }
+      }, 600); // RuneScape game tick is 600ms
+    } else if (!shouldFlash && this.flashInterval) {
+      // Stop flashing
+      clearInterval(this.flashInterval);
+      this.flashInterval = null;
+      this.flashState = false;
     }
   }
 
@@ -108,6 +140,9 @@ export class Alt1Overlay {
 
     this.isRendering = true;
     try {
+      // Manage flash timer for low HP state
+      this.manageFlashTimer();
+      
       // Clear when customization or states changed (or first render) so old text doesn't accumulate
       const customizationChanged = JSON.stringify(this.customization) !== this.lastRenderedCustomization;
       const statesChanged = JSON.stringify(this.states) !== this.lastRenderedStates;
@@ -168,7 +203,10 @@ export class Alt1Overlay {
             !(this.customization.hideWhenFull && b.current === b.max)).length;
 
           // Calculate full width: (number of bars * bar width) + (gaps between bars)
-          const fullWidth = (topRowBars * this.customization.barWidth) + ((topRowBars - 1) * gap);
+          // If no other bars are visible, fall back to standard bar width
+          const fullWidth = topRowBars > 0 
+            ? (topRowBars * this.customization.barWidth) + ((topRowBars - 1) * gap)
+            : this.customization.barWidth;
 
           // Draw adrenaline bar with full width
           await this.drawSingleBarWithWidth(bar.type as 'hp' | 'adrenaline' | 'prayer' | 'summoning', bar.current, bar.max || 100, x, y, fullWidth);
@@ -278,7 +316,7 @@ export class Alt1Overlay {
         const baseColor = this.getBarColor(type, current, max);
         let progressImage: string;
         if (this.customization.gradient) {
-          const gradConf = this.getGradientFor(type);
+          const gradConf = this.getGradientFor(type, current, max);
           if (gradConf) {
             const fromRGBA = this.parseColor(gradConf.from, opacity);
             const toRGBA = this.parseColor(gradConf.to, opacity);
@@ -405,7 +443,7 @@ export class Alt1Overlay {
         const baseColor = this.getBarColor(type, current, max);
         let progressImage: string;
         if (this.customization.gradient) {
-          const gradConf = this.getGradientFor(type);
+          const gradConf = this.getGradientFor(type, current, max);
           if (gradConf) {
             const fromRGBA = this.parseColor(gradConf.from, opacity);
             const toRGBA = this.parseColor(gradConf.to, opacity);
@@ -622,13 +660,17 @@ export class Alt1Overlay {
     return { r: 255, g: 255, b: 255, a: fallbackAlpha };
   }
 
-
   private getBarColor(type: 'hp' | 'adrenaline' | 'prayer' | 'summoning', current: number, max: number): { r: number; g: number; b: number } {
     // For HP we can switch to low color threshold
     let colorStr: string;
     if (type === 'hp') {
       const pct = (current / max) * 100;
-      colorStr = pct <= this.customization.lowHpThreshold ? this.customization.colors.hpLow : this.customization.colors.hp;
+      if (pct <= this.customization.lowHpThreshold) {
+        // Flash between normal HP color and low HP color
+        colorStr = this.flashState ? this.customization.colors.hpLow : this.customization.colors.hp;
+      } else {
+        colorStr = this.customization.colors.hp;
+      }
     } else {
       colorStr = this.customization.colors[type];
     }
@@ -636,11 +678,22 @@ export class Alt1Overlay {
     return { r: parsed.r, g: parsed.g, b: parsed.b };
   }
 
-  private getGradientFor(type: 'hp' | 'adrenaline' | 'prayer' | 'summoning'): { from: string; to: string } | undefined {
+  private getGradientFor(type: 'hp' | 'adrenaline' | 'prayer' | 'summoning', current?: number, max?: number): { from: string; to: string } | undefined {
     const g = this.customization.gradient;
     if (!g) return undefined;
+    
     switch (type) {
-      case 'hp': return g.hp;
+      case 'hp': 
+        // Check if we're in low HP state for gradients
+        if (current !== undefined && max !== undefined) {
+          const pct = (current / max) * 100;
+          if (pct <= this.customization.lowHpThreshold) {
+            // Flash between normal HP color and low HP color
+            const flashColor = this.flashState ? this.customization.colors.hpLow : this.customization.colors.hp;
+            return { from: flashColor, to: flashColor };
+          }
+        }
+        return g.hp;
       case 'adrenaline': return g.adrenaline;
       case 'prayer': return g.prayer;
       case 'summoning': return g.summoning;
