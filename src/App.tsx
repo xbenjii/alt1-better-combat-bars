@@ -2,7 +2,7 @@ import './App.css'
 
 import { ColortTriplet, findReadLine } from 'alt1/ocr';
 import { ImageDetect, captureHold, captureHoldFullRs, imageDataFromUrl } from 'alt1';
-import { LifeState, OverlayCustomization, ScreenResolution } from './types';
+import { LifeState, OverlayCustomization } from './types';
 import { useEffect, useState } from 'react'
 
 import AdrenalineOff from './assets/adrenaline_off_transparent.png';
@@ -18,9 +18,6 @@ import font from 'alt1/fonts/aa_8px_mono.js';
 
 const UPDATE_INTERVAL = 1000; // 1 second
 const GAME_TICK_UPDATE_INTERVAL = 600; // game tick is 0.6s
-
-const GAME_RESOLUTION: ScreenResolution = { width: alt1.rsWidth, height: alt1.rsHeight };
-console.log('Detected game resolution:', GAME_RESOLUTION);
 
 // Save and load customization settings
 const saveCustomization = (customization: OverlayCustomization) => {
