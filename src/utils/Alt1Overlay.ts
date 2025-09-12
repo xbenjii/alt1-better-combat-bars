@@ -40,6 +40,7 @@ export class Alt1Overlay {
     // Set the overlay group
     window.alt1.overLaySetGroup(this.overlayGroup);
     window.alt1.overLaySetGroupZIndex(this.overlayGroup, this.customization.alwaysOnTop ? 1000 : 100);
+    window.alt1.overLayFreezeGroup(this.overlayGroup);
 
     // Start rendering
     this.render();
@@ -91,6 +92,7 @@ export class Alt1Overlay {
       this.render();
     } else {
       window.alt1.overLayClearGroup(this.overlayGroup);
+      window.alt1.overLayRefreshGroup(this.overlayGroup);
     }
   }
 
@@ -107,6 +109,7 @@ export class Alt1Overlay {
 
     if (window.alt1) {
       window.alt1.overLayClearGroup(this.overlayGroup);
+      window.alt1.overLayRefreshGroup(this.overlayGroup);
     }
   }
 
@@ -151,8 +154,6 @@ export class Alt1Overlay {
       if (customizationChanged || statesChanged || firstRender) {
         window.alt1.overLayClearGroup(this.overlayGroup);
       }
-
-      window.alt1.overLaySetGroup(this.overlayGroup);
 
       // Calculate positions & theme layout overrides
       const gap = this.customization.themeLayout?.gap ?? 8;
@@ -213,6 +214,8 @@ export class Alt1Overlay {
         } else {
           await this.drawSingleBar(bar.type as 'hp' | 'adrenaline' | 'prayer' | 'summoning', bar.current, bar.max || 100, x, y);
         }
+
+        window.alt1.overLayRefreshGroup(this.overlayGroup);
 
         // Calculate next position based on layout
         switch (this.customization.layout) {
