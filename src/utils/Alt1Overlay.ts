@@ -215,8 +215,6 @@ export class Alt1Overlay {
           await this.drawSingleBar(bar.type as 'hp' | 'adrenaline' | 'prayer' | 'summoning', bar.current, bar.max || 100, x, y);
         }
 
-        window.alt1.overLayRefreshGroup(this.overlayGroup);
-
         // Calculate next position based on layout
         switch (this.customization.layout) {
           case 'horizontal':
@@ -243,6 +241,8 @@ export class Alt1Overlay {
 
         barIndex++;
       }
+
+      window.alt1.overLayRefreshGroup(this.overlayGroup);
 
       // Update cached states and customization
       this.lastRenderedStates = JSON.stringify(this.states);
