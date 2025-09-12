@@ -11,10 +11,6 @@ export type LifeState = {
   prayerMax: number;
   summoning: number;
   summoningMax: number;
-  exacthp: { cur: number; max: number } | null;
-  exactprayer: { cur: number; max: number } | null;
-  exactsummoning: { cur: number; max: number } | null;
-  exactadrenaline: { cur: number; max: number } | null;
   /** Whether the adrenaline icon (lit variant) was detected this tick */
   adrenalineActive?: boolean;
   /** Whether the prayer icon (lit variant) was detected this tick */

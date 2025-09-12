@@ -53,6 +53,7 @@
 
 .overlay-controls {
   display: flex;
+  justify-content: space-between;
   gap: 10px;
 }
 
@@ -192,4 +193,69 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+canvas {
+  width: 100%;
+  border-radius: 15px;
+}
+
+.credits-panel {
+  background: rgba(40, 44, 52, 0.95);
+  border: 1px solid #4CAF50;
+  border-radius: 8px;
+  color: white;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  margin: 20px auto 0;
+}
+
+.credits-content {
+  padding: 15px 20px;
+  text-align: center;
+}
+
+.credits-author {
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.credits-author a {
+  color: #4CAF50;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.credits-author a:hover {
+  color: #66d066;
+  text-decoration: underline;
+}
+
+.credits-links {
+  display: flex;
+  justify-content: center;
+}
+
+.report-issue-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.report-issue-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #4CAF50;
+  color: #4CAF50;
+  transform: translateY(-1px);
 }

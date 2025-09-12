@@ -59,13 +59,10 @@ function App() {
     prayerMax: 100,
     summoning: 0,
     summoningMax: 100,
-    exacthp: null,
-    exactadrenaline: null,
-    exactprayer: null,
-    exactsummoning: null,
   });
   const [customization, setCustomization] = useState<OverlayCustomization>(loadCustomization());
   const [showCustomization, setShowCustomization] = useState(false);
+  const [showDebug, setShowDebug] = useState(false);
   const [overlay, setOverlay] = useState<Alt1Overlay | null>(null);
   const [overlayEnabled, setOverlayEnabled] = useState(true);
   const [detected, setDetected] = useState(false); // has at least one real stat detection occurred?
@@ -337,6 +334,12 @@ function App() {
             >
               {overlayEnabled ? 'Disable Overlay' : 'Enable Overlay'}
             </button>
+            <button
+              onClick={() => setShowDebug(!showDebug)}
+              className="toggle-button"
+            >
+              {showDebug ? 'Hide' : 'Show'} Debug Info
+            </button>
           </div>
         </div>
 
@@ -348,24 +351,49 @@ function App() {
           onToggle={() => setShowCustomization(!showCustomization)}
         />
 
-        {/* Debug View (optional - can be hidden in production) */}
-        <canvas
-          style={{
-            zoom: 0.3,
-            border: '1px solid #ccc',
-            display: 'none', // Hide debug view by default
-          }}
-          ref={(canvas) => {
-            if (canvas && rsWindowImage) {
-              const ctx = canvas.getContext('2d');
-              if (ctx) {
-                canvas.width = rsWindowImage.width;
-                canvas.height = rsWindowImage.height;
-                ctx.putImageData(rsWindowImage, 0, 0);
+        {/* Debug Panel */}
+        <div className='debug-panel' style={{ display: showDebug ? 'block' : 'none' }}>
+          <h4>Debug Info</h4>
+          <canvas
+            style={{
+              zoom: 0.3,
+              border: '1px solid #ccc',
+            }}
+            ref={(canvas) => {
+              if (canvas && rsWindowImage) {
+                const ctx = canvas.getContext('2d');
+                if (ctx) {
+                  canvas.width = rsWindowImage.width;
+                  canvas.height = rsWindowImage.height;
+                  ctx.putImageData(rsWindowImage, 0, 0);
+                }
               }
-            }
-          }}
-        />
+            }}
+          />
+          <pre>{JSON.stringify(states, null, 2)}</pre>
+          <pre>Capture Region: {captureRegion ? `${captureRegion.x},${captureRegion.y} (${captureRegion.w}x${captureRegion.h})` : 'Not set'}</pre>
+          <pre>Icon Positions: {JSON.stringify(iconPositions)}</pre>
+          <pre>Failed Reads: {failedReads}</pre>
+        </div>
+
+        {/* Credits Panel */}
+        <div className="credits-panel">
+          <div className="credits-content">
+            <div className="credits-author">
+              Made by <a href="https://www.xbenjii.co.uk" target="_blank" rel="noopener noreferrer">xbenjii</a>
+            </div>
+            <div className="credits-links">
+              <a 
+                href="https://github.com/xbenjii/alt1-better-combat-bars/issues/new" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="report-issue-btn"
+              >
+                🐛 Report an Issue
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
   )
 }
