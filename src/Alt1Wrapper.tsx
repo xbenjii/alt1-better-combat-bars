@@ -10,10 +10,10 @@ type WrapperProps = {
 function Alt1Wrapper ({ children }: WrapperProps) {
   const [alt1Exists, setAlt1Exists] = useState(false);
     const [permissions, setPermissions] = useState<{ permissionInstalled: boolean, permissionGameState: boolean, permissionOverlay: boolean, permissionPixel: boolean }>({
-    permissionInstalled: window.alt1.permissionInstalled,
-    permissionGameState: window.alt1.permissionGameState,
-    permissionOverlay: window.alt1.permissionOverlay,
-    permissionPixel: window.alt1.permissionPixel
+    permissionInstalled: window.alt1?.permissionInstalled,
+    permissionGameState: window.alt1?.permissionGameState,
+    permissionOverlay: window.alt1?.permissionOverlay,
+    permissionPixel: window.alt1?.permissionPixel
   });
 
   useEffect(() => {
@@ -27,10 +27,10 @@ function Alt1Wrapper ({ children }: WrapperProps) {
   useEffect(() => {
     const getPermissons = () => {
       setPermissions({
-        permissionInstalled: window.alt1.permissionInstalled,
-        permissionGameState: window.alt1.permissionGameState,
-        permissionPixel: window.alt1.permissionPixel,
-        permissionOverlay: window.alt1.permissionOverlay,
+        permissionInstalled: window.alt1?.permissionInstalled,
+        permissionGameState: window.alt1?.permissionGameState,
+        permissionPixel: window.alt1?.permissionPixel,
+        permissionOverlay: window.alt1?.permissionOverlay,
       });
     };
     const permHandler = () => {
@@ -39,6 +39,16 @@ function Alt1Wrapper ({ children }: WrapperProps) {
     on("permissionchanged", permHandler);
     return () => removeListener("permissionchanged", permHandler);
   }, [permissions]);
+
+  if (!alt1Exists) {
+    const appUrl = `alt1://addapp/${new URL("./appconfig.json", document.location.href).href}`;
+
+    return (
+      <div>
+        Alt1 not detected, click <a href={appUrl}>here</a> to add this app to Alt1
+      </div>
+    );
+  }
 
   if (!permissions.permissionInstalled || !permissions.permissionGameState || !permissions.permissionPixel || !permissions.permissionOverlay) {
     return (
@@ -72,22 +82,11 @@ function Alt1Wrapper ({ children }: WrapperProps) {
     );
   }
 
-  if (alt1Exists) {
-    return (
-      <>
-        {children}
-      </>
-    );
-  } else {
-    const appUrl = `alt1://addapp/${new URL("./appconfig.json", document.location.href).href}`;
-
-    return (
-      <div>
-        Alt1 not detected, click <a href={appUrl}>here</a> to add this app to Alt1
-      </div>
-    );
-  }
-
+  return (
+    <>
+      {children}
+    </>
+  );
 };
 
 export default Alt1Wrapper;
