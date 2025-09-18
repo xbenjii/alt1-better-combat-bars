@@ -1,8 +1,8 @@
 import './App.css'
 
 import { ColortTriplet, findReadLine } from 'alt1/ocr';
+import { CombatIcons, LifeState, OcrLine, OverlayCustomization } from './types';
 import { ImageDetect, captureHold, captureHoldFullRs, imageDataFromUrl } from 'alt1';
-import { LifeState, OverlayCustomization } from './types';
 import { useEffect, useState } from 'react'
 
 import AdrenalineOff from './assets/adrenaline_off_transparent.png';
@@ -42,14 +42,6 @@ const loadCustomization = (): OverlayCustomization => {
 
 function App() {
   const [rsWindowImage, setRsWindowImage] = useState<ImageData | null>(null);
-  interface CombatIcons {
-    hp: ImageData;
-    adrenaline_on: ImageData;
-    adrenaline_off: ImageData;
-    prayer_on: ImageData;
-    prayer_off: ImageData;
-    summoning: ImageData;
-  }
   const [combatIcons, setCombatIcons] = useState<CombatIcons | null>(null);
   const [states, setStates] = useState<LifeState>({
     hp: 100,
@@ -69,7 +61,6 @@ function App() {
   const [iconPositions, setIconPositions] = useState<{ hp?: { x: number; y: number }; adrenaline?: { x: number; y: number }; prayer?: { x: number; y: number }; summoning?: { x: number; y: number }; }>({});
   const [captureRegion, setCaptureRegion] = useState<{ x: number; y: number; w: number; h: number } | null>(null);
   const [failedReads, setFailedReads] = useState(0);
-  interface OcrLine { text: string }
 
   // Save customization when it changes
   useEffect(() => {
@@ -123,8 +114,6 @@ function App() {
     };
     loadCombatIcons();
   }, []);
-
-
 
   useEffect(() => {
     const interval = setInterval(async () => {

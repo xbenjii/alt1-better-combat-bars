@@ -99,3 +99,16 @@ export interface OverlayCustomization {
   /** Enables built-in Alt1 text shadow (last parameter to overLayTextEx). Default true. */
   textShadow?: boolean;
 }
+
+export interface OcrLine {
+  text: string;
+}
+
+export interface CombatIcons {
+  hp: ImageData;
+  adrenaline_on: ImageData;
+  adrenaline_off: ImageData;
+  prayer_on: ImageData;
+  prayer_off: ImageData;
+  summoning: ImageData;
+}
