@@ -1,7 +1,7 @@
 import './App.css'
 
-import { Alt1EventType, on, removeListener } from 'alt1';
 import React, { useEffect, useState } from "react";
+import { on, removeListener } from 'alt1';
 
 type WrapperProps = {
   children: React.ReactNode
